@@ -3,8 +3,8 @@ CFLAGS = -g -Wall
 RM = rm
 
 EXE = image.exe
-COMPILE = main.o
-HEADER = stb/stb_image.h
+COMPILE = main.o filter.o image.o
+HEADER = image.h filter.h stblib.h
 
 .PHONY: compile build clean
 

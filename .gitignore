@@ -1,4 +1,10 @@
 /img
+/.vscode
 
 *.o
 *.exe
+
+*.png
+*.jpg
+*.jpeg
+*.bmp
