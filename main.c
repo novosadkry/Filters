@@ -37,14 +37,14 @@ int main(int argc, char const **argv)
 
         if (!stbi_write_png(out_file, w, h, n, out_data, w * n))
         {
-            printf("Something broke when writing to output file!");
+            printf("Something broke when writing to output file!\n");
             stbi_image_free(out_data);
             stbi_image_free(in_data);
 
             return 1;
         }
 
-        printf("Success! Result saved to '%s'", out_file);
+        printf("Success! Result saved to '%s'\n", out_file);
         stbi_image_free(out_data);
         stbi_image_free(in_data);
         return 0;
