@@ -1,6 +1,6 @@
 #include "main.h"
 
-const char* in_file ;
+const char* in_file;
 const char* out_file;
 
 int assign_args(int argc, char const **argv)
@@ -22,31 +22,26 @@ int main(int argc, char const **argv)
         return 1;
     }
 
-    int w, h, n;
-    Byte *in_data = stbi_load(in_file, &w, &h, &n, STBI_rgb);
-
+    Image img = image_load(in_file, STBI_rgb);
     printf("Loading image from '%s'...\n", in_file);
 
-    if (in_data)
+    if (img.data)
     {
-        printf("Success! ");
-        printf("W: %d H: %d N: %d\n", w, h, n);
+        printf("Success! W: %d H: %d N: %d\n", img.w, img.h, img.channels);
 
         printf("Processing input file...\n");
-        Byte *out_data = process_image(in_data, w, h, n);
+        image_process(&img);
 
-        if (!stbi_write_png(out_file, w, h, n, out_data, w * n))
+        if (!image_write_png(out_file, &img))
         {
             printf("Something broke when writing to output file!\n");
-            stbi_image_free(out_data);
-            stbi_image_free(in_data);
+            image_free(&img);
 
             return 1;
         }
 
         printf("Success! Result saved to '%s'\n", out_file);
-        stbi_image_free(out_data);
-        stbi_image_free(in_data);
+        image_free(&img);
         return 0;
     }
 
