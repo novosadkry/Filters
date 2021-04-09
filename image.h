@@ -8,6 +8,8 @@ typedef struct
     Byte r, g, b;
 } Pixel_RGB;
 
+float pixel_rgb_avg(Pixel_RGB p);
+
 typedef struct
 {
     int w, h, channels;
@@ -28,7 +30,7 @@ int image_write_png(const char* file, Image* img);
 Image image_load(const char* file, int channels);
 void image_free(Image* img);
 
-void image_set_pixel_rgb(Image_RGB* img, int x, int y, Pixel_RGB value);
-Pixel_RGB image_get_pixel_rgb(Image_RGB* img, int x, int y);
+int image_set_pixel_rgb(Image_RGB* img, int x, int y, Pixel_RGB value);
+int image_get_pixel_rgb(Image_RGB* img, int x, int y, Pixel_RGB* out);
 
 #endif

@@ -8,7 +8,7 @@ void image_process_rgb(Image_RGB* img)
     Image_RGB tmp = *img;
     tmp.data = calloc(img->w * img->h, sizeof(Pixel_RGB));
 
-    f_threshold_rgb(img, &tmp, 0.5f);
+    f_sobel_rgb(img, &tmp);
 
     free(img->data);
     img->data = tmp.data;
@@ -50,24 +50,35 @@ Image image_load(const char* file, int channels)
     return img;
 }
 
-void image_set_pixel_rgb(Image_RGB* img, int x, int y, Pixel_RGB value)
+int image_set_pixel_rgb(Image_RGB* img, int x, int y, Pixel_RGB value)
 {
-    if (x < img->w && y < img->h)
+    if ((x > 0 && x < img->w) && (y > 0 && y < img->h))
     {
         int i = x + img->w * y;
         img->data[i] = value;
+
+        return 1;
     }
+
+    return 0;
 }
 
-Pixel_RGB image_get_pixel_rgb(Image_RGB* img, int x, int y)
+int image_get_pixel_rgb(Image_RGB* img, int x, int y, Pixel_RGB* out)
 {
-    if (x < img->w && y < img->h)
+    if ((x > 0 && x < img->w) && (y > 0 && y < img->h))
     {
         int i = x + img->w * y;
-        return img->data[i];
+        *out = img->data[i];
+
+        return 1;
     }
 
-    return (Pixel_RGB) { 0, 0, 0 };
+    return 0;
+}
+
+float pixel_rgb_avg(Pixel_RGB p)
+{
+    return (p.r + p.g + p.b) / (3 * 255.0f);
 }
 
 void image_free(Image* img)
