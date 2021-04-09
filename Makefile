@@ -2,7 +2,7 @@ CC = gcc
 CFLAGS = -g -Wall
 RM = rm
 
-EXE = image.exe
+EXE = out.exe
 COMPILE = main.o filter.o image.o
 HEADER = image.h filter.h stblib.h
 
