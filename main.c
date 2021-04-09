@@ -18,7 +18,7 @@ int main(int argc, char const **argv)
 {
     if (!assign_args(argc, argv))
     {
-        printf("Invalid arguments!");
+        printf("Invalid arguments!\n");
         return 1;
     }
 

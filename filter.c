@@ -16,11 +16,27 @@ float SOBEL_KERNEL[2][9] =
     }
 };
 
+void f_flip_horizontal_rgb(Image_RGB *in, Image_RGB *out)
+{
+    for (int x = 0; x < in->w / 2; x++)
+    {
+        for (int y = 0; y < in->h; y++)
+        {
+            Pixel_RGB pLeft, pRight;
+            image_get_pixel_rgb(in, x, y, &pLeft);
+            image_get_pixel_rgb(in, in->w - x - 1, y, &pRight);
+
+            image_set_pixel_rgb(out, x, y, pRight);
+            image_set_pixel_rgb(out, in->w - x - 1, y, pLeft);
+        }
+    }
+}
+
 void f_grayscale_rgb(Image_RGB *in, Image_RGB *out)
 {
     for (int x = 0; x < in->w; x++)
     {
-        for (int y = 0; y < in->w; y++)
+        for (int y = 0; y < in->h; y++)
         {
             Pixel_RGB p;
             image_get_pixel_rgb(in, x, y, &p);
@@ -35,7 +51,7 @@ void f_threshold_rgb(Image_RGB *in, Image_RGB *out, float value)
 {
     for (int x = 0; x < in->w; x++)
     {
-        for (int y = 0; y < in->w; y++)
+        for (int y = 0; y < in->h; y++)
         {
             Pixel_RGB p;
             image_get_pixel_rgb(in, x, y, &p);

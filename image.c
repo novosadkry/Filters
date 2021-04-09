@@ -8,7 +8,7 @@ void image_process_rgb(Image_RGB* img)
     Image_RGB tmp = *img;
     tmp.data = calloc(img->w * img->h, sizeof(Pixel_RGB));
 
-    f_grayscale_rgb(img, &tmp);
+    f_flip_horizontal_rgb(img, &tmp);
 
     free(img->data);
     img->data = tmp.data;
