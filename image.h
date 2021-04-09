@@ -9,6 +9,7 @@ typedef struct
 } Pixel_RGB;
 
 float pixel_rgb_avg(Pixel_RGB p);
+float pixel_rgb_luminance(Pixel_RGB p);
 
 typedef struct
 {

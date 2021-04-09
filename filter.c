@@ -16,6 +16,21 @@ float SOBEL_KERNEL[2][9] =
     }
 };
 
+void f_grayscale_rgb(Image_RGB *in, Image_RGB *out)
+{
+    for (int x = 0; x < in->w; x++)
+    {
+        for (int y = 0; y < in->w; y++)
+        {
+            Pixel_RGB p;
+            image_get_pixel_rgb(in, x, y, &p);
+
+            float result = roundf(pixel_rgb_luminance(p) * 255);
+            image_set_pixel_rgb(out, x, y, (Pixel_RGB) { result, result, result });
+        }
+    }
+}
+
 void f_threshold_rgb(Image_RGB *in, Image_RGB *out, float value)
 {
     for (int x = 0; x < in->w; x++)
@@ -25,12 +40,8 @@ void f_threshold_rgb(Image_RGB *in, Image_RGB *out, float value)
             Pixel_RGB p;
             image_get_pixel_rgb(in, x, y, &p);
 
-            float avg = pixel_rgb_avg(p);
-
-            if (avg > value)
+            if (pixel_rgb_avg(p) > value)
                 image_set_pixel_rgb(out, x, y, (Pixel_RGB) { 255, 255, 255 });
-            else
-                image_set_pixel_rgb(out, x, y, (Pixel_RGB) { 0, 0, 0 });
         }
     }
 }

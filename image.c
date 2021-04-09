@@ -8,7 +8,7 @@ void image_process_rgb(Image_RGB* img)
     Image_RGB tmp = *img;
     tmp.data = calloc(img->w * img->h, sizeof(Pixel_RGB));
 
-    f_sobel_rgb(img, &tmp);
+    f_grayscale_rgb(img, &tmp);
 
     free(img->data);
     img->data = tmp.data;
@@ -79,6 +79,11 @@ int image_get_pixel_rgb(Image_RGB* img, int x, int y, Pixel_RGB* out)
 float pixel_rgb_avg(Pixel_RGB p)
 {
     return (p.r + p.g + p.b) / (3 * 255.0f);
+}
+
+float pixel_rgb_luminance(Pixel_RGB p)
+{
+    return (0.2126f * p.r + 0.7152f * p.g + 0.0722f * p.b) / 255.0f;
 }
 
 void image_free(Image* img)
