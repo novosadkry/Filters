@@ -4,8 +4,8 @@ LDFLAGS = -fopenmp
 RM = rm
 
 EXE = out.exe
-COMPILE = main.o filter.o image.o
-HEADER = image.h filter.h stblib.h
+COMPILE = main.o filter.o image.o timing.o
+HEADER = image.h filter.h timing.h stblib.h
 
 .PHONY: compile build clean
 

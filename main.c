@@ -1,5 +1,5 @@
 #include "main.h"
-#include <time.h>
+#include "timing.h"
 
 const char* in_file;
 const char* out_file;
@@ -31,12 +31,8 @@ int main(int argc, char const **argv)
         printf("Success! W: %d H: %d N: %d\n", img.w, img.h, img.channels);
         printf("Processing input file...\n");
 
-        clock_t start = clock();
-        image_process(&img);
-        clock_t diff = clock() - start;
-
-        int ms = diff * 1000 / CLOCKS_PER_SEC;
-        printf("Success! Time taken: %d ms\n", ms);
+        TIMING_MEASURE(image_process(&img));
+        printf("Success! Time taken: %ld ms\n", timing_get());
 
         printf("Writing result to output...\n");
         if (!image_write_png(out_file, &img))
