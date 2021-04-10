@@ -56,8 +56,11 @@ void f_threshold_rgb(Image_RGB *in, Image_RGB *out, float value)
             Pixel_RGB p;
             image_get_pixel_rgb(in, x, y, &p);
 
-            if (pixel_rgb_avg(p) > value)
-                image_set_pixel_rgb(out, x, y, (Pixel_RGB) { 255, 255, 255 });
+            p = pixel_rgb_avg(p) > value
+                ? (Pixel_RGB) { 255, 255, 255 }
+                : (Pixel_RGB) { 0, 0, 0 };
+
+            image_set_pixel_rgb(out, x, y, p);
         }
     }
 }

@@ -3,15 +3,22 @@
 #include "stblib.h"
 #include "filter.h"
 
+void image_swap_buffers(Image* b1, Image* b2)
+{
+    Byte* tmp = b1->data;
+    b1->data = b2->data;
+    b2->data = tmp;
+}
+
 void image_process_rgb(Image_RGB* img)
 {
     Image_RGB tmp = *img;
     tmp.data = calloc(img->w * img->h, sizeof(Pixel_RGB));
 
-    f_flip_horizontal_rgb(img, &tmp);
+    f_sobel_rgb(img, &tmp);
+    image_swap_buffers((Image*)img, (Image*)&tmp);
 
-    free(img->data);
-    img->data = tmp.data;
+    free(tmp.data);
 }
 
 void image_process(Image* img)

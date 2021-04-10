@@ -23,6 +23,8 @@ typedef struct
     Pixel_RGB* data;
 } Image_RGB;
 
+void image_swap_buffers(Image* b1, Image* b2);
+
 void image_process(Image* img);
 void image_process_rgb(Image_RGB* img);
 
