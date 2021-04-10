@@ -18,6 +18,7 @@ float SOBEL_KERNEL[2][9] =
 
 void f_flip_horizontal_rgb(Image_RGB *in, Image_RGB *out)
 {
+    #pragma omp parallel for shared(in, out) collapse(2)
     for (int x = 0; x < in->w / 2; x++)
     {
         for (int y = 0; y < in->h; y++)
@@ -34,6 +35,7 @@ void f_flip_horizontal_rgb(Image_RGB *in, Image_RGB *out)
 
 void f_grayscale_rgb(Image_RGB *in, Image_RGB *out)
 {
+    #pragma omp parallel for shared(in, out) collapse(2)
     for (int x = 0; x < in->w; x++)
     {
         for (int y = 0; y < in->h; y++)
@@ -49,6 +51,7 @@ void f_grayscale_rgb(Image_RGB *in, Image_RGB *out)
 
 void f_threshold_rgb(Image_RGB *in, Image_RGB *out, float value)
 {
+    #pragma omp parallel for shared(in, out) collapse(2)
     for (int x = 0; x < in->w; x++)
     {
         for (int y = 0; y < in->h; y++)
