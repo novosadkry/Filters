@@ -1,4 +1,5 @@
 #include "main.h"
+#include "image.h"
 #include "timing.h"
 
 const char* in_file;

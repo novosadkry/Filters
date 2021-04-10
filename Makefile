@@ -1,23 +1,30 @@
 CC = gcc
-CFLAGS = -g -Wall
+CFLAGS = -g -Wall -Istb
 LDFLAGS = -fopenmp
-RM = rm
+
+RM = rm -rf
+MKDIR = mkdir -p
+
+ODIR = obj
+SDIR = src
 
 EXE = out.exe
-COMPILE = main.o filter.o image.o timing.o
-HEADER = image.h filter.h timing.h stblib.h
+SOURCE = $(wildcard $(SDIR)/*.c)
+HEADER = $(wildcard $(SDIR)/*.h)
+OBJECT = $(patsubst $(SDIR)/%.c, $(ODIR)/%.o, $(SOURCE))
 
 .PHONY: compile build clean
 
 build: $(EXE)
 
-$(EXE): $(COMPILE)
+$(EXE): $(OBJECT)
 	$(CC) -o $@ $^ $(LDFLAGS)
 
-compile: $(COMPILE)
+compile: $(OBJECT)
 
-%.o: %.c $(HEADER)
-	$(CC) $(CFLAGS) -c $< $(LDFLAGS)
+$(ODIR)/%.o: $(SDIR)/%.c $(HEADER)
+	@ $(MKDIR) obj
+	$(CC) $(CFLAGS) -c $< -o $@ $(LDFLAGS)
 
 clean:
-	$(RM) $(EXE) *.o
+	$(RM) $(EXE) $(ODIR)
