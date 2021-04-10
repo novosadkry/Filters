@@ -1,5 +1,6 @@
 CC = gcc
 CFLAGS = -g -Wall
+LDFLAGS = -fopenmp
 RM = rm
 
 EXE = out.exe
@@ -11,12 +12,12 @@ HEADER = image.h filter.h stblib.h
 build: $(EXE)
 
 $(EXE): $(COMPILE)
-	$(CC) -o $@ $^
+	$(CC) -o $@ $^ $(LDFLAGS)
 
 compile: $(COMPILE)
 
 %.o: %.c $(HEADER)
-	$(CC) $(CFLAGS) -c $<
+	$(CC) $(CFLAGS) -c $< $(LDFLAGS)
 
 clean:
 	$(RM) $(EXE) *.o

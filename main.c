@@ -1,4 +1,5 @@
 #include "main.h"
+#include <time.h>
 
 const char* in_file;
 const char* out_file;
@@ -28,10 +29,16 @@ int main(int argc, char const **argv)
     if (img.data)
     {
         printf("Success! W: %d H: %d N: %d\n", img.w, img.h, img.channels);
-
         printf("Processing input file...\n");
-        image_process(&img);
 
+        clock_t start = clock();
+        image_process(&img);
+        clock_t diff = clock() - start;
+
+        int ms = diff * 1000 / CLOCKS_PER_SEC;
+        printf("Success! Time taken: %d ms\n", ms);
+
+        printf("Writing result to output...\n");
         if (!image_write_png(out_file, &img))
         {
             printf("Something broke when writing to output file!\n");
